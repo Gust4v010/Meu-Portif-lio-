@@ -1,1 +1,62 @@
+calculadora de IMC
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de IMC - Projeto Acadêmico</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Calculadora de IMC</h1>
+        <p>Projeto acadêmico de Front-end</p>
 
+        <label for="peso">Peso (kg):</label>
+        <input type="number" id="peso" placeholder="Ex: 70" required>
+
+        <label for="altura">Altura (m):</label>
+        <input type="number" id="altura" placeholder="Ex: 1.75" required step="0.01">
+
+        <button onclick="calcularIMC()">Calcular</button>
+
+        <div id="resultado" class="resultado">Aguardando cálculo...</div>
+    </div>
+
+    <script>
+        function calcularIMC() {
+            const peso = parseFloat(document.getElementById('peso').value);
+            const altura = parseFloat(document.getElementById('altura').value);
+            const resultadoDiv = document.getElementById('resultado');
+
+            if (isNaN(peso) || isNaN(altura) || altura <= 0 || peso <= 0) {
+                resultadoDiv.textContent = "Por favor, insira valores válidos.";
+                resultadoDiv.style.backgroundColor = '#e74c3c';
+                return;
+            }
+
+            // Fórmula do IMC: peso / (altura * altura)
+            const imc = (peso / (altura * altura)).toFixed(2);
+            let classificacao = '';
+            let cor = '#3498db'; // Azul padrão
+
+            if (imc < 18.5) {
+                classificacao = 'Abaixo do peso';
+                cor = '#f1c40f'; // Amarelo
+            } else if (imc >= 18.5 && imc < 24.9) {
+                classificacao = 'Peso normal';
+                cor = '#2ecc71'; // Verde
+            } else if (imc >= 25 && imc < 29.9) {
+                classificacao = 'Sobrepeso';
+                cor = '#e67e22'; // Laranja
+            } else {
+                classificacao = 'Obesidade';
+                cor = '#e74c3c'; // Vermelho
+            }
+
+            resultadoDiv.textContent = `Seu IMC é: ${imc} (${classificacao})`;
+            resultadoDiv.style.backgroundColor = cor;
+        }
+    </script>
+</body>
+</html>
